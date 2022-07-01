@@ -26,8 +26,17 @@ with mp_face_detection.FaceDetection(
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         if results.detections:
             for detection in results.detections:
-                mp_drawing.draw_detection(image, detection)
-                print(detection.location_data.relative_bounding_box)
+                # mp_drawing.draw_detection(image, detection)
+                x = detection.location_data.relative_bounding_box.xmin
+                y = detection.location_data.relative_bounding_box.ymin
+                width = detection.location_data.relative_bounding_box.width
+                height = detection.location_data.relative_bounding_box.height
+
+                shape = image.shape
+
+                cv2.rectangle(image, (int(x * shape[1]), int(y * shape[0])), (int(x * shape[1])+(
+                    int(width * shape[1])), int(y * shape[0])+int(height * shape[0])), (0, 255, 0), 2)
+                # print(detection.location_data.relative_bounding_box.xmin)
         # Flip the image horizontally for a selfie-view display.
         cv2.imshow('MediaPipe Face Detection', cv2.flip(image, 1))
         if cv2.waitKey(5) & 0xFF == 27:
