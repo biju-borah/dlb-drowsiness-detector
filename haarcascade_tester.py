@@ -39,7 +39,7 @@ while True:
     for (x, y, w, h) in faces_detected:
         X = []
 
-        cv2.rectangle(test_img, (x, y), (x+w, y+h), (0, 255, 0), thickness=3)
+        # cv2.rectangle(test_img, (x, y), (x+w, y+h), (0, 255, 0), thickness=3)
 
         shape = predictor(gray_img, dlib.rectangle(x, y, x+w, y+h))
 
@@ -60,9 +60,9 @@ while True:
         print(predictions)
 
         # Display the landmarks
-        for i, (x, y) in enumerate(shape):
+        for i, (_x, _y) in enumerate(shape):
             # Draw the circle to mark the keypoint
-            cv2.circle(test_img, (x, y), 1, (0, 0, 0), -1)
+            cv2.circle(test_img, (_x, _y), 1, (0, 0, 0), -1)
 
         cv2.putText(test_img, labels_class[np.argmax(predictions)] + " " + str(round(predictions[0][np.argmax(
             predictions)] * 100, 2)), (0, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
